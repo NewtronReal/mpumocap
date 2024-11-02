@@ -9,8 +9,9 @@
 #endif
 #define SSID "VDMAEQ720VD" //model number of vethram VD stands for Vethram Device
 #define PASSWORD "something"
+#define host "vethramdevice.local"
 #define UDP_PORT 4444
-#define SLAVE_NO 0x02
+#define SLAVE_NO 0x01
  
 
 MPU6050 mpu;
@@ -110,7 +111,7 @@ void loop() {
             teapotPacket[9] = fifoBuffer[13];
             Serial.write(teapotPacket, 14);
             Serial.println("sending..");
-            UDP.beginPacket("192.168.4.1",4444);
+            UDP.beginPacket("vethramdevice.local",UDP_PORT);
             UDP.write(teapotPacket,14);
             UDP.endPacket();
             teapotPacket[11]++; 
