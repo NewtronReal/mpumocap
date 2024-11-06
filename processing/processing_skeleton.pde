@@ -14,20 +14,20 @@ void setup(){
   lights();
   smooth();
   //uncomment it to start serial port listening
-  //String portName = Serial.list()[0];
-  //port = new Serial(this,portName,115200);
+  String portName = Serial.list()[0];
+  port = new Serial(this,portName,115200);
 }
 
 float scale = 2;//scale of entire skeleton
 
-
+float inrot[] = {-PI/2,PI/2,PI/6,-PI/6,-PI/6,PI/6};
 //format {inital relative rotationsZ,Y,X,length of bone}
-float rot1[] = {-PI/2,0,0,.4*scale*100};//chest(stationary)
-float rot2[] = {PI/2,0,0,.5*scale*100};//hip
-float rot3[] = {PI/6,0,0,.6*scale*100};//femour
-float rot4[] = {-PI/6,0,0,.6*scale*100};//femour
-float rot5[] = {-PI/6,0,0,.5*scale*100};//tibia
-float rot6[] = {PI/6,0,0,.5*scale*100};//tibia
+float rot1[] = {inrot[0],0,0,.4*scale*100};//chest(stationary)
+float rot2[] = {inrot[1],0,0,.5*scale*100};//hip
+float rot3[] = {inrot[2],0,0,.6*scale*100};//femour
+float rot4[] = {inrot[3],0,0,.6*scale*100};//femour
+float rot5[] = {inrot[4],0,0,.5*scale*100};//tibia
+float rot6[] = {inrot[5],0,0,.5*scale*100};//tibia
 float rot[][] = {rot1,rot2,rot3,rot4,rot5,rot6};
 float radius = 5*scale;//radius of bones
 void draw(){
@@ -96,9 +96,9 @@ void eulerRotate(float rot[]){
 }
 
 void negEulerRotate(float rot[]){
-  rotateZ(-rot[0]);
-  rotateY(-rot[1]);
   rotateX(-rot[2]);
+  rotateY(-rot[1]);
+  rotateZ(-rot[0]);
 }
 
 float deg(float degree){
@@ -126,9 +126,9 @@ void serialEvent(Serial port){
         q1[2] = ((sensorPacket[6] << 8) | sensorPacket[7]) / 16384.0f;
         q1[3] = ((sensorPacket[8] << 8) | sensorPacket[9]) / 16384.0f;
         for (int i = 0; i < 4; i++) if (q1[i] >= 2) q1[i] = -4 + q1[i];
-        rot[sensorPacket[1]-1][0] += atan2(2*q1[1]*q1[2] - 2*q1[0]*q1[3], 2*q1[0]*q1[0] + 2*q1[1]*q1[1] - 1);
-        rot[sensorPacket[1]-1][1] += -asin(2*q1[1]*q1[3] + 2*q1[0]*q1[2]);
-        rot[sensorPacket[1]-1][2] += atan2(2*q1[2]*q1[3] - 2*q1[0]*q1[1], 2*q1[0]*q1[0] + 2*q1[3]*q1[3] - 1);
+        rot[sensorPacket[1]+1][0] = inrot[sensorPacket[1]-1]+atan2(2*q1[1]*q1[2] - 2*q1[0]*q1[3], 2*q1[0]*q1[0] + 2*q1[1]*q1[1] - 1);
+        rot[sensorPacket[1]+1][1] = -asin(2*q1[1]*q1[3] + 2*q1[0]*q1[2]);
+        rot[sensorPacket[1]+1][2] = atan2(2*q1[2]*q1[3] - 2*q1[0]*q1[1], 2*q1[0]*q1[0] + 2*q1[3]*q1[3] - 1);
       }
     }
   }
