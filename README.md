@@ -1,22 +1,29 @@
 # Vethram
 
-Vethram is a fall prediction hardware solution aiming elder people. It predicts the fall based on a pre-trained ML model. It uses ESP32, ESP8266 and MPU6050 IMU at its core.
+Vethram is a fall prediction hardware solution designed for elderly individuals. It utilizes an ESP32, ESP8266, and an MPU6050 IMU to predict falls based on a pre-trained ML model.
 
-## Current progress
+## Current Progress
 
-- Slave devices sketch and implementation done.
-- Master device(USB device) done(UDP).
-- Processing simulation and testing done.
-- Multi slave support for both master and processing script done.
+- **Slave Device Implementation**: Firmware for slave devices has been sketched and implemented.
+- **Master Device (USB Device)**: Master device setup with UDP functionality completed.
+- **Processing Simulation**: Simulation and testing in the Processing environment are complete.
+- **Multi-Slave Support**: Both the master device and processing script support multiple slave devices.
 
-## Building
+## Building Instructions
 
-Download the source code and flash the `ino` files to corresponding boards. For master scripts use `ESP32 DEV KIT V1` and for slave devices use `ESP8266 01`. Connect master to your PC and run the processing script on processing.
+1. Download the source code from this repository.
+2. Flash the `.ino` files onto the respective boards:
+   - **Master Device**: Use `ESP32 DEV KIT V1`.
+   - **Slave Devices**: Use `ESP8266 01`.
+3. Connect the master device to your PC.
+4. Run the processing script to initialize communication and testing.
 
-## To Do List
+## To-Do List
 
-- Wireless Master using TCP.
-- Processing TCP receive.
-- Python connection and TCP receive.
-- GUI connections.
-- ML Model
+- **Wireless Master**: Implement TCP communication for the master device.
+- **Processing TCP Receive**: Update the processing script to support TCP-based data reception.
+- **Python Connection**: Establish TCP connections and data reception in Python.
+- **GUI Integration**: Implement GUI to display data and predictions.
+- **ML Model Integration**: Integrate and test the pre-trained ML model for fall prediction.
+
+---
